@@ -1,0 +1,26 @@
+# Makefile for MINGW GCC
+
+CC	= gcc
+LD	= gcc -o
+CFLAGS	:= -Wall -fomit-frame-pointer -std=c11 -O3 -pipe \
+	   -ffast-math -fexec-charset=GBK $(EXTRA_CFLAGS)
+EXTRA_CFLAGS	:=
+LDFLAGS := -lSDL2main -lSDL2_mixer -lSDL2
+
+RM = del
+
+rewrite.exe: main.o common.o func.o Makefile.mingw
+		$(LD) rewrite.exe main.o common.o func.o $(LDFLAGS)
+
+main.o: main.c rewrite.h Makefile.mingw
+		$(CC) -c main.c $(CFLAGS) -o main.o
+
+common.o: common.c rewrite.h cursor.h Makefile.mingw
+		$(CC) -c common.c $(CFLAGS) -o common.o
+
+func.o: func.c rewrite.h cursor.h Makefile.mingw
+		$(CC) -c func.c $(CFLAGS) -o func.o
+
+.PHONY: clean
+clean:
+		$(RM) rewrite.exe *.o
