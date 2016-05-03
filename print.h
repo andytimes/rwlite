@@ -24,12 +24,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __REWRITE_H
-#define __REWRITE_H
+#ifndef __REWRITE_PRINT_H
+#define __REWRITE_PRINT_H
 
-extern int aurora;
+#include <string>
 
-extern void start_menu();
-extern void main_line();
+enum {
+	CHAR_EN_SIZE = 1,
+	CHAR_CN_SIZE = 3,
+};
 
-#endif /* __REWRITE_H */
+class Print {
+public:
+	void title(const std::string &s);
+	void sub(const std::string &s);
+	void view(const std::string &s, int del = RUN_AUTO,
+		  int char_del = 22);
+	void info(const std::string &s, int del = RUN_AUTO,
+		  int char_del = 22);
+	void mono(const std::string &s, int del = RUN_AUTO,
+		  int char_del = 22);
+private:
+	static const int RUN_AUTO = -255;
+	int auto_sleep(const std::string &s);
+	void delay(int del);
+	void per_char_delay(int del);
+};
+
+#endif // __REWRITE_PRINT_H

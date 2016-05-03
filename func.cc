@@ -24,12 +24,81 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __REWRITE_H
-#define __REWRITE_H
+#include <string>
+using std::string;
 
-extern int aurora;
+#include <iostream>
+using std::cin; using std::cout;
 
-extern void start_menu();
-extern void main_line();
+#include <SDL.h>
+#include "rewrite.h"
+#include "cursor.h"
+#include "print.h"
+#include "music.h"
 
-#endif /* __REWRITE_H */
+static Print prt;
+
+static bool music_switch()
+{
+	string s;
+
+	cout << "是否开启音乐？\n\n1.开启  2.关闭\n\n请选择 (默认关闭): ";
+
+	return (cin >> s && s[0] == '1');
+}
+
+void start_menu()
+{
+	string s;
+
+	clscr();
+	cout << "这是一个Rewrite文字版冒险游戏\n\n1.开始Rewrite\n"
+		"2.继续Rewrite (暂不可用)\n3.退出\n\n请选择(默认退出): ";
+
+	while (cin >> s) {
+		switch (s[0]) {
+		case '1':
+			goto Start;
+		case '2':
+			// goto Read;
+			cout << "暂不可用，请选择 (1, 3): ";
+			break;
+		case '3':
+		default:
+			goto End;
+		}
+	}
+
+Start:
+	clscr();
+	music_on = music_switch();
+	clscr();
+
+	mix_init();
+	play_bgm(RW_Tabi);
+	prt.view("\n将一切，全部改写 ...\n", 5);
+
+	clscr();
+	main_line();
+	return;
+
+#if 0
+// FIXME: unimplemented, implement it later
+ Read:
+	music_on = music_switch();
+	clscr();
+
+	mix_init();
+	play_bgm(RW_Tabi);
+	prt.view("\n延续 ...", 2);
+	clscr();
+	return;
+#endif
+
+// FIXME: incomplete, make it complete later
+ End:
+	clscr();
+	prt.view("\n结束 ...", 2);
+	clscr();
+	return;
+}

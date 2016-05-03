@@ -24,12 +24,77 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __REWRITE_H
-#define __REWRITE_H
+#include <iostream>
+using std::cout; using std::flush;
 
-extern int aurora;
+#include <string>
+using std::string;
 
-extern void start_menu();
-extern void main_line();
+#include "print.h"
+#include "cursor.h"
+#include "time.h"
 
-#endif /* __REWRITE_H */
+int Print::auto_sleep(const string &s)
+{
+	bool is_long_cn_str = s.size() > CHAR_CN_SIZE * 15;
+	return is_long_cn_str ? 3 : 2;
+}
+
+void Print::delay(int del)
+{
+#ifndef RWDEBUG
+	sleep(del);
+#else
+	msleep(10);
+#endif
+}
+
+void Print::per_char_delay(int del)
+{
+#ifndef RWDEBUG
+	msleep(del);
+#else
+	msleep(10);
+#endif
+}
+
+void Print::title(const string &s)
+{
+	clscr();
+	goto_xy(1, 1);
+	cout << s;
+}
+
+void Print::sub(const string &s)
+{
+	clsub();
+	goto_xy(1, 5);
+	cout << s;
+}
+
+void Print::view(const string &s, int del, int char_del)
+{
+	for (auto i : s) {
+		cout << i << flush;
+		per_char_delay(char_del);
+	}
+
+	if (del == RUN_AUTO)
+		delay(auto_sleep(s));
+	else
+		delay(del);
+}
+
+void Print::info(const string &s, int del, int char_del)
+{
+	clinfo();
+	goto_xy(1, 7);
+	view(s, del, char_del);
+}
+
+void Print::mono(const string &s, int del, int char_del)
+{
+	clsub();
+	goto_xy(1, 7);
+	view(s, del, char_del);
+}

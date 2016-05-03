@@ -24,12 +24,22 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __REWRITE_H
-#define __REWRITE_H
+#ifndef __REWRITE_MUSIC_H
+#define __REWRITE_MUSIC_H
 
-extern int aurora;
+enum BGM_NAME {
+	RW_Mebuki = 1,
+	RW_Hinagiku = 10,
+	RW_Wataboshi = 13,
+	RW_Tabi = 16,
+	RW_Sanka = 17,
+	RW_DIS_is_a_Pain = 34,
+	RW_Philosophyz_GSV = 46
+};
 
-extern void start_menu();
-extern void main_line();
+extern bool music_on;
 
-#endif /* __REWRITE_H */
+void mix_init();
+void play_bgm(unsigned id);
+
+#endif // __REWRITE_MUSIC_H

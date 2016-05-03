@@ -24,12 +24,53 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __REWRITE_H
-#define __REWRITE_H
 
-extern int aurora;
+#include <iostream>
+using std::cout;
 
-extern void start_menu();
-extern void main_line();
+#include "cursor.h"
 
-#endif /* __REWRITE_H */
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#endif
+
+void goto_xy(int x, int y)
+{
+#if defined(_WIN32) || defined(_WIN64)
+	COORD cursorPosition;
+	cursorPosition.X = x - 1;
+	cursorPosition.Y = y - 1;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),
+				 cursorPosition);
+#else
+	cout << "\033[" << y << ";" << x << "H";
+#endif
+}
+
+void clscr()
+{
+#if defined(_WIN32) || defined(_WIN64)
+	system("cls");
+#else
+	cout << CLR_SCR;
+#endif
+}
+
+void clline()
+{
+	cout << CLR_LINE;
+}
+
+void clsub()
+{
+	goto_xy(1, 5);
+	cout << CLR_UNDER;
+	goto_xy(1, 5);
+}
+
+void clinfo()
+{
+	goto_xy(1, 7);
+	cout << CLR_UNDER;
+	goto_xy(1, 7);
+}

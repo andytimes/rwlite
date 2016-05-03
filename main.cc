@@ -24,12 +24,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __REWRITE_H
-#define __REWRITE_H
+#include "rewrite.h"
 
-extern int aurora;
+int main(int argc, char *argv[])
+{
+	start_menu();
 
-extern void start_menu();
-extern void main_line();
-
-#endif /* __REWRITE_H */
+	return 0;
+}

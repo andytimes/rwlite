@@ -1,18 +1,31 @@
 /*
- * Copyright (c) 2016, Andy Deng <theandy.deng@gmail.com>
+ * Copyright (c) 2015-2016, Andy Deng <theandy.deng@gmail.com>
+ * All rights reserved.
  *
- * Licensed under the FreeBSD as detailed in the accompanying
- * LICENSE file.
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * * Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ *
+ * * Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef __REWRITE_CURSOR_H
 #define __REWRITE_CURSOR_H
-
-#include <stdio.h>
-#include "rewrite.h"
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#endif
 
 #define CLR_SCR		"\033[1H\033[2J"
 
@@ -45,93 +58,11 @@
 			"                    "
 #endif
 
-static inline void goto_xy(const unsigned int x, const unsigned int y)
-{
-#if defined(_WIN32) || defined(_WIN64)
-	COORD cursorPosition;
-	cursorPosition.X = x - 1;
-	cursorPosition.Y = y - 1;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),
-				 cursorPosition);
-#else
-	printf("\033[%u;%dH", y, x);
-#endif
-}
+void goto_xy(int x, int y);
 
-static inline void clr_scr(void)
-{
-#if defined(_WIN32) || defined(_WIN64)
-	system("cls");
-#else
-	printf("%s", CLR_SCR);
-#endif
-}
-
-static inline void clr_line(void)
-{
-	printf("%s", CLR_LINE);
-}
-
-static inline void clr_sub(void)
-{
-	goto_xy(1, 5);
-	printf("%s", CLR_UNDER);
-	goto_xy(1, 5);
-}
-
-static inline void clr_info(void)
-{
-	goto_xy(1, 7);
-	printf("%s", CLR_UNDER);
-	goto_xy(1, 7);
-}
-
-/*
- * Text output effect 1:
- *
- * Output 1 character per 24 ms (custom with change char_control to 1)
- *
- * delay：wait (delay) seconds once output finish.
- */
-extern void txt_view(const char* str, const unsigned int delay);
-
-/*
- * Text output effect 2:
- *
- * Same as Text output effect 1, but clean all characters after delay.
- */
-static inline void one_line(const char *str, const unsigned int delay)
-{
-	txt_view(str, delay);
-	clr_line();
-}
-
-static inline void prt_info(const char *str, const unsigned int delay)
-{
-	clr_info();
-	goto_xy(1, 7);
-	txt_view(str, delay);
-}
-
-// Output character monologue
-static inline void prt_mono(const char *str, const unsigned int delay)
-{
-	clr_sub();
-	prt_info(str, delay);
-}
-
-static inline void prt_sub(const char *str)
-{
-	clr_sub();
-	goto_xy(1, 5);
-	printf("%s", str);
-}
-
-static inline void prt_title(const char *str)
-{
-	clr_scr();
-	goto_xy(1, 1);
-	printf("%s", str);
-}
+void clscr();
+void clline();
+void clsub();
+void clinfo();
 
 #endif // __REWRITE_CURSOR_H

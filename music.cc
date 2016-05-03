@@ -24,12 +24,33 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __REWRITE_H
-#define __REWRITE_H
+#include <string>
+using std::string; using std::to_string;
 
-extern int aurora;
+#include <SDL_mixer.h>
 
-extern void start_menu();
-extern void main_line();
+bool music_on;
 
-#endif /* __REWRITE_H */
+void mix_init()
+{
+	if (music_on) {
+		Mix_Init(MIX_INIT_OGG);
+		Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 2048);
+	}
+}
+
+void play_bgm(unsigned id)
+{
+	if (music_on) {
+		string s;
+
+		if (id < 10)
+			s = "BGM/BGM00" + to_string(id) + ".ogg";
+		else if (id < 100)
+			s = "BGM/BGM0" + to_string(id) + ".ogg";
+		else
+			return;
+
+		Mix_PlayMusic(Mix_LoadMUS(s.c_str()), -1);
+	}
+}

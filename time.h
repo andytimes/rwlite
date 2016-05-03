@@ -24,12 +24,28 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __REWRITE_H
-#define __REWRITE_H
+#ifndef __REWRITE_TIME_H
+#define __REWRITE_TIME_H
 
-extern int aurora;
+#include <SDL.h>
 
-extern void start_menu();
-extern void main_line();
+static inline void sleep(unsigned sec)
+{
+	SDL_Delay(sec * 1000);
+}
 
-#endif /* __REWRITE_H */
+static inline void msleep(unsigned ms)
+{
+	SDL_Delay(ms);
+}
+
+static inline void rw_delay(unsigned sec)
+{
+#ifndef RWDEBUG
+	sleep(sec);
+#else
+	msleep(500);
+#endif
+}
+
+#endif // __REWRITE_TIME_H
