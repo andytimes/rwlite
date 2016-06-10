@@ -8,6 +8,9 @@ CFLAGS	:= -Wall -std=c++11 -O3 -march=native \
 	   -fomit-frame-pointer -pipe \
 	   $(EXTRA_CFLAGS)
 CFLAGS	+= $(shell sdl2-config --cflags)
+
+CFLAGS	+= -Irapidjson/include
+
 LDFLAGS	:= -lSDL2 -lSDL2_mixer
 EXTRA_CFLAGS	:=
 
