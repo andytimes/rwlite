@@ -1,5 +1,6 @@
 ![](http://r.loli.io/6Fb2eq.jpg)
 ## Rewrite Lite
+[![Build Status](https://api.travis-ci.org/andytimes/rwlite.svg?branch=master)](https://travis-ci.org/andytimes/rwlite)
 ###简介
 * 对 PC 游戏 Rewrite（Visual Art's/Key）进行简化，跨平台移植。
 
