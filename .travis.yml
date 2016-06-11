@@ -1,0 +1,34 @@
+language: cpp
+sudo: requried
+cache:
+  - ccache
+
+env:
+global:
+    - USE_CCACHE=1
+    - CCACHE_MAXSIZE=100M
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq -y libsdl2-dev libsdl2-mixer-dev
+
+matrix:
+  include:
+    - compiler: gcc
+      env: CONF=release ARCH=x86 CXX11=ON
+    - compiler: gcc
+      env: CONF=release ARCH=x86_64 CXX11=ON
+    - compiler: clang
+      env: CONF=release ARCH=x86 CXX11=ON CCACHE_CPP2=yes
+    - compiler: clang
+      env: CONF=release ARCH=x86_64 CXX11=ON CCACHE_CPP2=yes
+
+before_script:
+    - ccache -s
+    - mkdir buildir
+
+script:
+  - cd buildir
+  - make DEBUG=1 -j2
+  - make clean
+  - make -j2

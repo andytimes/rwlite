@@ -61,6 +61,7 @@ BGM/
 #
 !.gitignore
 !.gitattributes
+!.travis.yml
 
 # stgit generated dirs
 patches-*
