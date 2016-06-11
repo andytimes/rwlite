@@ -27,6 +27,9 @@
 #ifndef __REWRITE_MUSIC_H
 #define __REWRITE_MUSIC_H
 
+#include <string>
+#include <SDL_mixer.h>
+
 enum BGM_NAME {
 	RW_Mebuki = 1,
 	RW_Hinagiku = 10,
@@ -38,8 +41,10 @@ enum BGM_NAME {
 };
 
 extern bool music_on;
+extern Mix_Music *RWMusic;
 
 void mix_init();
+void play_bgm(const std::string &file);
 void play_bgm(unsigned id);
 
 #endif // __REWRITE_MUSIC_H

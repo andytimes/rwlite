@@ -28,27 +28,53 @@
 #define __REWRITE_PRINT_H
 
 #include <string>
+#include <fstream>
 
 enum {
 	CHAR_EN_SIZE = 1,
 	CHAR_CN_SIZE = 3,
 };
 
+extern const char SCRIPT_NAME[];
+
 class Print {
 public:
+	Print(const std::string &name = SCRIPT_NAME) :
+		script_name(name) {}
+	~Print() { close(); }
+	bool open(const std::string &name = SCRIPT_NAME);
+	void close();
+	void read();
+	void command(const std::string &cmd);
+
+	void view(const std::string &s, int del = RUN_AUTO,
+			int char_del = NORMAL_DELAY);
 	void title(const std::string &s);
 	void sub(const std::string &s);
-	void view(const std::string &s, int del = RUN_AUTO,
-		  int char_del = 22);
 	void info(const std::string &s, int del = RUN_AUTO,
-		  int char_del = 22);
+			int char_del = NORMAL_DELAY);
 	void mono(const std::string &s, int del = RUN_AUTO,
-		  int char_del = 22);
+			int char_del = NORMAL_DELAY);
 private:
-	static const int RUN_AUTO = -255;
+	static const int RUN_AUTO = -20;
+	static const int MANUAL = -21;
+	static const int NO_DELAY = 0;
+	static const int FAST_DELAY = 10;
+	static const int NORMAL_DELAY = 22;
+
+	std::fstream::pos_type mark = 0;
+	std::string script_name;
+	std::fstream file;
+	std::string line;
+
+	bool get();
+
 	int auto_sleep(const std::string &s);
 	void delay(int del);
 	void per_char_delay(int del);
+
+	void rwsleep(const std::string &s);
+	void rwmusic(const std::string &file);
 };
 
 #endif // __REWRITE_PRINT_H

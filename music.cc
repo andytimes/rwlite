@@ -30,6 +30,7 @@ using std::string; using std::to_string;
 #include <SDL_mixer.h>
 
 bool music_on;
+Mix_Music *RWMusic;
 
 void mix_init()
 {
@@ -39,9 +40,29 @@ void mix_init()
 	}
 }
 
+void play_bgm(const string &s)
+{
+	if (music_on) {
+		if (Mix_PlayingMusic()) {
+			Mix_FreeMusic(RWMusic);
+			RWMusic = nullptr;
+		}
+
+		if (s != "nobgm") {
+			RWMusic = Mix_LoadMUS(s.c_str());
+			Mix_PlayMusic(RWMusic, -1);
+		}
+	}
+}
+
 void play_bgm(unsigned id)
 {
 	if (music_on) {
+		if (Mix_PlayingMusic()) {
+			Mix_FreeMusic(RWMusic);
+			RWMusic = nullptr;
+		}
+
 		string s;
 
 		if (id < 10)
@@ -51,6 +72,8 @@ void play_bgm(unsigned id)
 		else
 			return;
 
-		Mix_PlayMusic(Mix_LoadMUS(s.c_str()), -1);
+		RWMusic = Mix_LoadMUS(s.c_str());
+		if (RWMusic)
+			Mix_PlayMusic(RWMusic, -1);
 	}
 }

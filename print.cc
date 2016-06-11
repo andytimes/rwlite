@@ -26,13 +26,170 @@
 
 #include <iostream>
 using std::cout; using std::flush;
+using std::cerr; using std::endl;
 
 #include <string>
-using std::string;
+using std::string; using std::stoi;
+
+#include <fstream>
+using std::fstream; using std::getline;
+
+#include <SDL_mixer.h>
 
 #include "print.h"
 #include "cursor.h"
 #include "time.h"
+#include "music.h"
+
+const char SCRIPT_NAME[] = "script.txt";
+
+bool Print::open(const std::string &name)
+{
+	script_name = name;
+
+	file.open(script_name, fstream::in);
+
+	if (!file) {
+		cerr << "Unable to open " << script_name
+			<< "!" << endl;
+		return false;
+	}
+
+	return true;
+}
+
+void Print::close()
+{
+	if (file.is_open())
+		file.close();
+}
+
+void Print::read()
+{
+	while (file && get()) {
+		if (line.front() == '$') {
+			command(line);
+		} else if (line.front() == '[' && line.back() == ']') {
+			sub(line);
+		} else if (line.substr(0, 2) == "--") {
+			string tmp = line.substr(2);
+
+			if (line.back() == '\\') {
+				tmp.pop_back();
+				tmp += '\n';
+
+				while (get()) {
+					if (line.back() != '\\') {
+						tmp += line.substr(2);
+						break;
+					} else {
+						line.pop_back();
+						tmp += line.substr(2) + '\n';
+					}
+				}
+			}
+
+			mono(line.substr(2));
+		} else if (line.substr(0, 2) == "=T") {
+			title(line.substr(2));
+		} else if (line.substr(0, 2) == ";;") {
+			continue;
+		} else if (!line.empty()) {
+			if (line.back() == '\\') {
+				string tmp = line;
+
+				tmp.pop_back();
+				tmp += '\n';
+
+				while (get()) {
+					if (line.back() != '\\') {
+						tmp += line;
+						break;
+					} else {
+						line.pop_back();
+						tmp += line + '\n';
+					}
+				}
+
+				info(tmp);
+			} else {
+				info(line);
+			}
+		}
+	}
+}
+
+void Print::command(const std::string &cmd)
+{
+	const string sleep("$sleep ");
+	const string music("$music ");
+	const string video("$video ");
+	const auto nofound = std::string::npos;
+
+	if (cmd.find(sleep) != nofound) {
+		rwsleep(cmd.substr(sleep.size()));
+	} else if (cmd.find(music) != nofound) {
+		rwmusic(cmd.substr(music.size()));
+	}
+	// FIXME: Unsupport video play now!
+	else if (cmd.find(video) != nofound) {
+		;
+	}
+}
+
+bool Print::get()
+{
+	if (getline(file, line)) {
+		mark = file.tellg();
+	} else {
+		return false;
+	}
+
+	return true;
+}
+
+void Print::title(const string &s)
+{
+	clscr();
+	goto_xy(1, 1);
+	cout << s;
+}
+
+void Print::sub(const string &s)
+{
+	clsub();
+	goto_xy(1, 5);
+	cout << s;
+}
+
+void Print::view(const string &s, int del, int char_del)
+{
+	for (auto i : s) {
+		cout << i << flush;
+
+		if (char_del != NO_DELAY)
+			per_char_delay(char_del);
+	}
+
+	if (del == RUN_AUTO)
+		delay(auto_sleep(s));
+	else
+		delay(del);
+}
+
+void Print::info(const string &s, int del, int char_del)
+{
+	clinfo();
+	goto_xy(1, 7);
+	view(s, del, char_del);
+}
+
+void Print::mono(const string &s, int del, int char_del)
+{
+	clsub();
+	goto_xy(1, 7);
+	view(s, del, char_del);
+}
 
 int Print::auto_sleep(const string &s)
 {
@@ -58,43 +215,16 @@ void Print::per_char_delay(int del)
 #endif
 }
 
-void Print::title(const string &s)
+void Print::rwsleep(const string &s)
 {
-	clscr();
-	goto_xy(1, 1);
-	cout << s;
+#ifndef RWDEBUG
+	sleep(stoi(s));
+#else
+	msleep(500);
+#endif
 }
 
-void Print::sub(const string &s)
+void Print::rwmusic(const string &file)
 {
-	clsub();
-	goto_xy(1, 5);
-	cout << s;
-}
-
-void Print::view(const string &s, int del, int char_del)
-{
-	for (auto i : s) {
-		cout << i << flush;
-		per_char_delay(char_del);
-	}
-
-	if (del == RUN_AUTO)
-		delay(auto_sleep(s));
-	else
-		delay(del);
-}
-
-void Print::info(const string &s, int del, int char_del)
-{
-	clinfo();
-	goto_xy(1, 7);
-	view(s, del, char_del);
-}
-
-void Print::mono(const string &s, int del, int char_del)
-{
-	clsub();
-	goto_xy(1, 7);
-	view(s, del, char_del);
+	play_bgm(file);
 }
