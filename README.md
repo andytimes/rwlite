@@ -6,9 +6,17 @@
 ### 运行方式
 **获取资源文件夹 [BGM](https://yunpan.cn/cqE8T3xPTULqR )（提取码：6a8f）**
 
+**首先** :
+* 进入源代码目录，在 git 终端执行：
+
+```shell
+    git submodule update --init
+```
+* 之后根据具体平台，执行如下操作：
+
 **Linux** :
 
-* 安装 gcc, make, SDL2_mixer-devel, SDL2-devel
+* 确保已安装 gcc, make, SDL2_mixer-devel, SDL2-devel
 * 源代码目录执行 `make`
 * 运行：`./rewrite`
 
@@ -19,8 +27,8 @@
 * 运行：双击 **rewrite.exe**
 
 ### 背景音乐
-* BGM.info 提供详细信息
+* **BGM.info** 文件提供详细信息
 
 ### 其它
-* 源代码许可证：**FreeBSD**；
+* 源代码许可证：[**BSD-2-Clause**](https://opensource.org/licenses/BSD-2-Clause)
 * 资源文件仅供试听，版权归 **Visual Art's/Key** 所有
