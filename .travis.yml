@@ -1,5 +1,6 @@
 language: cpp
 sudo: requried
+dist: trusty
 cache:
   - ccache
 
