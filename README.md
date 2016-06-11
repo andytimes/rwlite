@@ -6,13 +6,12 @@
 ### 运行方式
 **获取资源文件夹 [BGM](https://yunpan.cn/cqE8T3xPTULqR )（提取码：6a8f）**
 
-**首先** :
-* 进入源代码目录，在 git 终端执行：
+首先进入源代码目录，将获取的 BGM 文件夹解压进去，并在 git 终端执行：
 
 ```shell
-    git submodule update --init
+git submodule update --init
 ```
-* 之后根据具体平台，执行如下操作：
+之后根据具体平台，执行下面的操作：
 
 **Linux** :
 
