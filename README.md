@@ -1,7 +1,7 @@
 ![](http://r.loli.io/6Fb2eq.jpg)
 ## Rewrite Lite
 ###简介
-* 移植 Rewrite 中的 Mapping 小游戏，简化情节，剧情改写。
+* 对 PC 游戏 Rewrite（Visual Art's/Key）进行简化，跨平台移植。
 
 ### 运行方式
 **获取资源文件夹 [BGM](https://yunpan.cn/cqE8T3xPTULqR )（提取码：6a8f）**
