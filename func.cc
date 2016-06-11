@@ -36,8 +36,6 @@ using std::cin; using std::cout;
 #include "print.h"
 #include "music.h"
 
-static Print prt;
-
 static bool music_switch()
 {
 	string s;
@@ -50,6 +48,7 @@ static bool music_switch()
 void start_menu()
 {
 	string s;
+	Print prt;
 
 	clscr();
 	cout << "这是一个Rewrite文字版冒险游戏\n\n1.开始Rewrite\n"

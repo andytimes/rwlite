@@ -31,9 +31,7 @@ using std::cout; using std::cerr;
 #include <SDL_mixer.h>
 
 #include "cursor.h"
-#include "music.h"
 #include "print.h"
-#include "time.h"
 
 int aurora;
 
