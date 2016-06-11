@@ -26,10 +26,8 @@ matrix:
 
 before_script:
     - ccache -s
-    - mkdir buildir
 
 script:
-  - cd buildir
   - make DEBUG=1 -j2
   - make clean
   - make -j2
