@@ -1,4 +1,3 @@
-![](http://r.loli.io/6Fb2eq.jpg)
 ## Rewrite Lite
 [![Build Status](https://api.travis-ci.org/andytimes/rwlite.svg?branch=master)](https://travis-ci.org/andytimes/rwlite)
 ###简介
@@ -32,3 +31,5 @@ git submodule update --init
 ### 其它
 * 源代码许可证：[**BSD-2-Clause**](https://opensource.org/licenses/BSD-2-Clause)
 * 资源文件仅供试听，版权归 **Visual Art's/Key** 所有
+
+![](http://r.loli.io/jyAz6z.jpg)
