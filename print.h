@@ -60,7 +60,7 @@ private:
 	static const int MANUAL = -21;
 	static const int NO_DELAY = 0;
 	static const int FAST_DELAY = 10;
-	static const int NORMAL_DELAY = 22;
+	static const int NORMAL_DELAY = 20;
 
 	std::fstream::pos_type mark = 0;
 	std::string script_name;
