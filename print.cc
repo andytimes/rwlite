@@ -89,7 +89,8 @@ void Print::read()
 				}
 			}
 
-			mono(line.substr(2));
+			mono(tmp);
+
 		} else if (line.substr(0, 2) == "=T") {
 			title(line.substr(2));
 		} else if (line.substr(0, 2) == ";;") {
