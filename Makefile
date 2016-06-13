@@ -1,18 +1,16 @@
 # Makefile for Linux, use V=1 get more information
 
-CC	= gcc
-CXX	= g++
 LD	= $(CXX) -o
 
 CFLAGS	:= -Wall -std=c++11 -O3 -march=native \
 	   -fomit-frame-pointer -pipe \
 	   $(EXTRA_CFLAGS)
 CFLAGS	+= $(shell sdl2-config --cflags)
-
 CFLAGS	+= -Irapidjson/include
 
-LDFLAGS	:= -lSDL2 -lSDL2_mixer
+LDFLAGS	:= -lSDL2 -lSDL2_mixer $(EXTRA_LDFLAGS)
 EXTRA_CFLAGS	:=
+EXTRA_LDFLAGS	:=
 
 RM	= @rm -f
 
