@@ -12,7 +12,6 @@ global:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq -y libsdl2-dev libsdl2-mixer-dev
-  - pip install --user cpp-coveralls
 
 matrix:
   include:
@@ -32,7 +31,3 @@ script:
   - make DEBUG=1 -j2
   - make clean
   - make -j2
-
-after_success:
-  - make test -j2
-  - coveralls --gcov-options '\-lp'
