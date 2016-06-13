@@ -13,6 +13,7 @@ CFLAGS	+= -Irapidjson/include
 
 LDFLAGS	:= -lSDL2 -lSDL2_mixer
 EXTRA_CFLAGS	:=
+EXTRA_LDFLAGS	:=
 
 RM	= @rm -f
 
@@ -31,26 +32,30 @@ endif
 
 OBJECTS	= common.o cursor.o func.o main.o music.o print.o
 
+.PHONY: test
+test:
+	$(MAKE) all EXTRA_CFLAGS=--coverage EXTRA_LDFLAGS=--coverage
+
 .PHONY: all
 all: rewrite
 
 rewrite: $(OBJECTS) Makefile
-	$(QLD) $(LD) rewrite $(OBJECTS) $(LDFLAGS)
+	$(QLD) $(LD) rewrite $(OBJECTS) $(LDFLAGS) $(EXTRA_LDFLAGS)
 
 common.o: common.cc cursor.h music.h print.h time.h Makefile
-	$(QCXX) $(CXX) -c common.cc $(CFLAGS) -o common.o
+	$(QCXX) $(CXX) -c common.cc $(CFLAGS) $(EXTRA_CFLAGS) -o common.o
 
 cursor.o: cursor.cc cursor.h Makefile
-	$(QCXX) $(CXX) -c cursor.cc $(CFLAGS) -o cursor.o
+	$(QCXX) $(CXX) -c cursor.cc $(CFLAGS) $(EXTRA_CFLAGS) -o cursor.o
 
 func.o: func.cc rewrite.h cursor.h print.h music.h Makefile
-	$(QCXX) $(CXX) -c func.cc $(CFLAGS) -o func.o
+	$(QCXX) $(CXX) -c func.cc $(CFLAGS) $(EXTRA_CFLAGS) -o func.o
 
 main.o: main.cc rewrite.h Makefile
-	$(QCXX) $(CXX) -c main.cc $(CFLAGS) -o main.o
+	$(QCXX) $(CXX) -c main.cc $(CFLAGS) $(EXTRA_CFLAGS) -o main.o
 
 music.o: music.cc Makefile
-	$(QCXX) $(CXX) -c music.cc $(CFLAGS) -o music.o
+	$(QCXX) $(CXX) -c music.cc $(CFLAGS) $(EXTRA_CFLAGS) -o music.o
 
 print.o: print.cc print.h cursor.h time.h Makefile
 	$(QCXX) $(CXX) -c print.cc $(CFLAGS) -o print.o
@@ -58,4 +63,4 @@ print.o: print.cc print.h cursor.h time.h Makefile
 .PHONY: clean
 clean:
 	@echo '  CLEAN   .'
-	$(RM) rewrite *.o
+	$(RM) rewrite *.o *.gc*
