@@ -28,7 +28,6 @@
 #define __REWRITE_COMMON_H
 
 #include <string>
-#include <vector>
 #include <fstream>
 
 class CommonVar {

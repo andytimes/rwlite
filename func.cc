@@ -67,8 +67,6 @@ void start_menu()
 			goto start;
 		case '2':
 			goto read;
-			cout << "暂不可用，请选择 (1, 3): ";
-			break;
 		case '3':
 		default:
 			goto end;
