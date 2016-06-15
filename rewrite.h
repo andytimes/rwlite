@@ -28,6 +28,7 @@
 #define __REWRITE_H
 
 extern int aurora;
+extern bool rw_continue;
 
 extern void start_menu();
 extern void main_line();

@@ -42,6 +42,11 @@ rewrite
 rewrite.exe
 
 #
+# Rewrite Lite's data file
+#
+*.json
+
+#
 # Do not upload resource file
 #
 BGM/

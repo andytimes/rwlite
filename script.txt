@@ -46,6 +46,7 @@ $music BGM/BGM010.ogg
 因为我仍旧两手空空。
 可是，就连接下来该做什么我都不知道。
 每天只是这样，虚度光阴而已...
+$save auto
 
 ;; Moon 线路部分剧情
 $music nobgm
@@ -84,6 +85,7 @@ $sleep 3
 我也不明白。
 啊，话说回来。
 这是个不错的夜晚啊...
+$save auto
 
 ;; 开场介绍，用终端模拟输出，之后的图形化界面会替换为原版开场视频
 $music BGM/BGM046.ogg
@@ -141,6 +143,7 @@ $sleep 1
 $sleep 2
 将一切，全部改写
 $sleep 17
+$save auto
 
 $music BGM/BGM034.ogg
 =T         - 10月23日 周五 -
@@ -208,6 +211,7 @@ $music BGM/BGM034.ogg
 --当然，这约定一回头就被我抛到了脑后
 --放学后我就直接回家了
 --我可是个很能敷衍了事的男人。
+$save auto
 
 $music BGM/BGM013.ogg
 

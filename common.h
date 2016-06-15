@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016, Andy Deng <theandy.deng@gmail.com>
+ * Copyright (c) 2016, Andy Deng <theandy.deng@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -24,75 +24,18 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef __REWRITE_COMMON_H
+#define __REWRITE_COMMON_H
+
 #include <string>
-using std::string;
+#include <vector>
+#include <fstream>
 
-#include <iostream>
-using std::cin; using std::cout;
+class CommonVar {
+protected:
+	std::size_t line_num = 0;
+	std::fstream::pos_type script_mark;
+	std::fstream rwscript;
+};
 
-#include <SDL.h>
-#include "rewrite.h"
-#include "cursor.h"
-#include "print.h"
-#include "music.h"
-
-bool rw_continue = false;
-
-static bool music_switch()
-{
-	string s;
-
-	cout << "是否开启音乐？\n\n1.开启  2.关闭\n\n请选择 (默认关闭): ";
-
-	return (cin >> s && s[0] == '1');
-}
-
-void start_menu()
-{
-	string s;
-	Print prt;
-
-	clscr();
-	music_on = music_switch();
-	mix_init();
-	play_bgm(RW_Tabi);
-
-	clscr();
-	cout << "Rewrite Lite (Terminal)\n\n  1.开始 Rewrite"
-		"\n  2.继续 Rewrite\n  3.退出\n\n请选择(默认退出): ";
-
-	while (cin >> s) {
-		switch (s[0]) {
-		case '1':
-			goto start;
-		case '2':
-			goto read;
-			cout << "暂不可用，请选择 (1, 3): ";
-			break;
-		case '3':
-		default:
-			goto end;
-		}
-	}
-
-start:
-	clscr();
-	prt.view("\n将一切，全部改写 ...\n", 5);
-	clscr();
-	main_line();
-	return;
-
-read:
-	rw_continue = true;
-	clscr();
-	prt.view("\n延续 ...", 5);
-	clscr();
-	main_line();
-	return;
-
-end:
-	clscr();
-	prt.view("\n结束 ...", 3);
-	clscr();
-	return;
-}
+#endif // __REWRITE_COMMON_H

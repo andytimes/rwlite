@@ -30,6 +30,7 @@ using std::string; using std::to_string;
 #include <SDL_mixer.h>
 
 bool music_on;
+
 Mix_Music *RWMusic;
 
 void mix_init()

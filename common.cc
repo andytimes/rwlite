@@ -24,14 +24,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <iostream>
-using std::cout; using std::cerr;
-
 #include <SDL.h>
 #include <SDL_mixer.h>
 
 #include "cursor.h"
-#include "print.h"
+#include "script.h"
 
 int aurora;
 
@@ -45,11 +42,8 @@ static void quit()
 
 void main_line()
 {
-	Print prt;
-	if (!prt.open())
-		return;
-
-	prt.read();
+	Script script;
+	script.read();
 
 	quit();
 }

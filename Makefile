@@ -9,6 +9,7 @@ CFLAGS	+= $(shell sdl2-config --cflags)
 CFLAGS	+= -Irapidjson/include
 
 LDFLAGS	:= -lSDL2 -lSDL2_mixer $(EXTRA_LDFLAGS)
+
 EXTRA_CFLAGS	:=
 EXTRA_LDFLAGS	:=
 
@@ -27,7 +28,7 @@ ifndef V
 	export V
 endif
 
-OBJECTS	= common.o cursor.o func.o main.o music.o print.o
+OBJECTS	= common.o cursor.o func.o main.o music.o print.o savedata.o script.o
 
 .PHONY: all
 all: rewrite
@@ -35,7 +36,7 @@ all: rewrite
 rewrite: $(OBJECTS) Makefile
 	$(QLD) $(LD) rewrite $(OBJECTS) $(LDFLAGS)
 
-common.o: common.cc cursor.h music.h print.h time.h Makefile
+common.o: common.cc cursor.h script.h Makefile
 	$(QCXX) $(CXX) -c common.cc $(CFLAGS) -o common.o
 
 cursor.o: cursor.cc cursor.h Makefile
@@ -52,6 +53,12 @@ music.o: music.cc Makefile
 
 print.o: print.cc print.h cursor.h time.h Makefile
 	$(QCXX) $(CXX) -c print.cc $(CFLAGS) -o print.o
+
+savedata.o: savedata.cc savedata.h Makefile
+	$(QCXX) $(CXX) -c savedata.cc $(CFLAGS) -o savedata.o
+
+script.o: script.cc common.h script.h print.h time.h music.h rewrite.h Makefile
+	$(QCXX) $(CXX) -c script.cc $(CFLAGS) -o script.o
 
 .PHONY: clean
 clean:

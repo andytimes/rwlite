@@ -28,53 +28,45 @@
 #define __REWRITE_PRINT_H
 
 #include <string>
-#include <fstream>
 
-enum {
+#define RUN_AUTO	-20
+#define RUN_MANUAL	-21
+
+enum Char_Size {
 	CHAR_EN_SIZE = 1,
 	CHAR_CN_SIZE = 3,
 };
 
-extern const char SCRIPT_NAME[];
+enum Delay_Level {
+	NO_DELAY = 0,
+	FAST_DELAY = 10,
+	NORMAL_DELAY = 20,
+};
 
 class Print {
 public:
-	Print(const std::string &name = SCRIPT_NAME) :
-		script_name(name) {}
-	~Print() { close(); }
-	bool open(const std::string &name = SCRIPT_NAME);
-	void close();
-	void read();
-	void command(const std::string &cmd);
-
-	void view(const std::string &s, int del = RUN_AUTO,
-			int char_del = NORMAL_DELAY);
+	/*
+	 * Terminal's' print operation:
+	 *
+	 * @s:        the string that need to print;
+	 * @del:      delay (del) seconds after print finish;
+	 * @char_del: delay (char_del) milliseconds between each character.
+	 *
+	 * title() and sub() doesn't have @del and @char_del parameters.
+	 */
 	void title(const std::string &s);
 	void sub(const std::string &s);
+	void view(const std::string &s, int del = RUN_AUTO,
+			int char_del = NORMAL_DELAY);
 	void info(const std::string &s, int del = RUN_AUTO,
 			int char_del = NORMAL_DELAY);
 	void mono(const std::string &s, int del = RUN_AUTO,
 			int char_del = NORMAL_DELAY);
 private:
-	static const int RUN_AUTO = -20;
-	static const int MANUAL = -21;
-	static const int NO_DELAY = 0;
-	static const int FAST_DELAY = 10;
-	static const int NORMAL_DELAY = 20;
-
-	std::fstream::pos_type mark = 0;
-	std::string script_name;
-	std::fstream file;
-	std::string line;
-
-	bool get();
 
 	int auto_sleep(const std::string &s);
 	void delay(int del);
 	void per_char_delay(int del);
-
-	void rwsleep(const std::string &s);
-	void rwmusic(const std::string &file);
 };
 
 #endif // __REWRITE_PRINT_H
