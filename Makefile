@@ -1,19 +1,19 @@
 # Makefile for Linux, use V=1 get more information
 
-LD	= $(CXX) -o
+SCRS	:= $(wildcard *.cc)
+OBJS	:= $(SCRS:.cc=.o)
 
-CFLAGS	:= -Wall -std=c++11 -O3 -march=native \
-	   -fomit-frame-pointer -pipe \
+CFLAGS	:= $(shell sdl2-config --cflags) -std=c++11 \
+	   -Wall -O2 -pipe -fomit-frame-pointer \
+	   -Irapidjson/include \
 	   $(EXTRA_CFLAGS)
-CFLAGS	+= $(shell sdl2-config --cflags)
-CFLAGS	+= -Irapidjson/include
 
-LDFLAGS	:= -lSDL2 -lSDL2_mixer $(EXTRA_LDFLAGS)
+LDFLAGS	:= -lSDL2 -lSDL2_mixer $(EXTRA_LDLAGS)
 
 EXTRA_CFLAGS	:=
-EXTRA_LDFLAGS	:=
+EXTRA_LDLAGS	:=
 
-RM	= @rm -f
+RM	:= @rm -f
 
 DEBUG = 0
 
@@ -28,39 +28,24 @@ ifndef V
 	export V
 endif
 
-OBJECTS	= common.o cursor.o func.o main.o music.o print.o savedata.o script.o
-
 .PHONY: all
 all: rewrite
 
-rewrite: $(OBJECTS) Makefile
-	$(QLD) $(LD) rewrite $(OBJECTS) $(LDFLAGS)
+%.o: %.cc
+	$(QCXX) $(CXX) $(CFLAGS) -c $< -o $@
 
-common.o: common.cc cursor.h script.h Makefile
-	$(QCXX) $(CXX) -c common.cc $(CFLAGS) -o common.o
-
-cursor.o: cursor.cc cursor.h Makefile
-	$(QCXX) $(CXX) -c cursor.cc $(CFLAGS) -o cursor.o
-
-func.o: func.cc rewrite.h cursor.h print.h music.h Makefile
-	$(QCXX) $(CXX) -c func.cc $(CFLAGS) -o func.o
-
-main.o: main.cc rewrite.h Makefile
-	$(QCXX) $(CXX) -c main.cc $(CFLAGS) -o main.o
-
-music.o: music.cc Makefile
-	$(QCXX) $(CXX) -c music.cc $(CFLAGS) -o music.o
-
-print.o: print.cc print.h cursor.h time.h Makefile
-	$(QCXX) $(CXX) -c print.cc $(CFLAGS) -o print.o
-
-savedata.o: savedata.cc savedata.h Makefile
-	$(QCXX) $(CXX) -c savedata.cc $(CFLAGS) -o savedata.o
-
-script.o: script.cc common.h script.h print.h time.h music.h rewrite.h Makefile
-	$(QCXX) $(CXX) -c script.cc $(CFLAGS) -o script.o
+rewrite: $(OBJS)
+	$(QLD) $(CXX) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 .PHONY: clean
 clean:
-	@echo '  CLEAN   .'
-	$(RM) rewrite *.o
+	@echo "  CLEAN   ."
+	$(RM) $(OBJS) rewrite *.d
+
+-include $(SCRS:.cc=.d)
+
+%.d: %.cc
+	@set -e; rm -f $@; \
+	$(CXX) -MM $(CFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
