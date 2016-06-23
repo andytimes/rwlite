@@ -24,11 +24,94 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "rewrite.h"
+#include <string>
+using std::string;
 
-int main(int argc, char *argv[])
+#include <iostream>
+using std::cin; using std::cout;
+
+#include <SDL.h>
+#include <SDL_mixer.h>
+#include "cursor.h"
+#include "print.h"
+#include "music.h"
+#include "script.h"
+
+int aurora;
+bool rw_continue = false;
+
+static bool music_switch()
+{
+	string s;
+
+	cout << "是否开启音乐？\n\n1.开启  2.关闭\n\n请选择 (默认关闭): ";
+
+	return (cin >> s && s[0] == '1');
+}
+
+static void quit()
+{
+	clscr();
+	Mix_Quit();
+	SDL_Quit();
+}
+
+static void main_line()
+{
+	Script script;
+	script.read();
+	quit();
+}
+
+static void start_menu()
+{
+	string s;
+	Print prt;
+
+	clscr();
+	music_on = music_switch();
+	mix_init();
+	play_bgm(RW_Tabi);
+
+	clscr();
+	cout << "Rewrite Lite (Terminal)\n\n  1.开始 Rewrite"
+		"\n  2.继续 Rewrite\n  3.退出\n\n请选择(默认退出): ";
+
+	while (cin >> s) {
+		switch (s[0]) {
+		case '1':
+			goto start;
+		case '2':
+			goto read;
+		case '3':
+		default:
+			goto end;
+		}
+	}
+
+start:
+	clscr();
+	prt.view("\n将一切，全部改写 ...\n", 5);
+	clscr();
+	main_line();
+	return;
+
+read:
+	rw_continue = true;
+	clscr();
+	prt.view("\n延续 ...", 5);
+	clscr();
+	main_line();
+	return;
+
+end:
+	clscr();
+	prt.view("\n结束 ...", 3);
+	clscr();
+	return;
+}
+
+int main(int, char *[])
 {
 	start_menu();
-
-	return 0;
 }

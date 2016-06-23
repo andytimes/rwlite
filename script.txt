@@ -2,7 +2,7 @@
 ;; 终端测试版本
 
 ;; 序言，男主角独白
-=T            - 序言 -
+=T- 序言 -
 $sleep 4
 $music BGM/BGM010.ogg
 
@@ -50,9 +50,9 @@ $save auto
 
 ;; Moon 线路部分剧情
 $music nobgm
-=T           - Moon - 月光
+=T- Moon - 月光
 $sleep 3
-=T           - 月光漫步 -
+=T- 月光漫步 -
 
 [瑚太朗]
 ...这是个无法入睡的夜晚。
@@ -89,7 +89,7 @@ $save auto
 
 ;; 开场介绍，用终端模拟输出，之后的图形化界面会替换为原版开场视频
 $music BGM/BGM046.ogg
-=T        开场介绍
+=T- 开场介绍 -
 $sleep 38
 [神户小鸟]
 瑚太朗君，要多看看外面的世界哦-
@@ -146,7 +146,7 @@ $sleep 17
 $save auto
 
 $music BGM/BGM034.ogg
-=T         - 10月23日 周五 -
+=T- 10月23日 周五 -
 
 [吉野]
 我再也忍受不了了！
@@ -262,5 +262,5 @@ $sleep 1
 =T未完待续 ...
 $music BGM/BGM016.ogg
 $sleep 3
-=T   5 秒后自动退出 ...
+=T5 秒后自动退出 ...
 $sleep 5

@@ -30,7 +30,4 @@
 extern int aurora;
 extern bool rw_continue;
 
-extern void start_menu();
-extern void main_line();
-
 #endif /* __REWRITE_H */

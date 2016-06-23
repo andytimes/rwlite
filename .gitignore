@@ -6,6 +6,7 @@
 # Normal rules
 #
 .*
+*.d
 *.o
 *.o.*
 *.a

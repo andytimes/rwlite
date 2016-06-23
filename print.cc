@@ -37,7 +37,7 @@ using std::string;
 void Print::title(const string &s)
 {
 	clscr();
-	goto_xy(1, 1);
+	goto_xy(12, 1);
 	cout << s;
 }
 
