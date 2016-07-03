@@ -27,7 +27,6 @@
 #ifndef __REWRITE_COMMON_H
 #define __REWRITE_COMMON_H
 
-#include <string>
 #include <fstream>
 
 class CommonVar {

@@ -27,35 +27,35 @@
 #ifndef __REWRITE_CURSOR_H
 #define __REWRITE_CURSOR_H
 
-#define CLR_SCR		"\033[1H\033[2J"
+#define CLR_SCR		"\033c"
 
-#if !defined(_WIN32) && !defined(_WIN64)
+#ifndef _WIN32
 #define CLR_LINE	"\033[2K\r"
 #else
-#define CLR_LINE	"\r                                        " \
-			"                    \r"
+#define CLR_LINE	"\r                              " \
+			"                              \r"
 #endif
 
-#if !defined(_WIN32) && !defined(_WIN64)
+#ifndef _WIN32
 #define CLR_UNDER	"\033[2K\033[B\033[2K\033[B\033[2K\033[B\033[2K\033[B" \
 			"\033[2K\033[B\033[2K\033[B\033[2K\033[B\033[2K"
 #else
-#define CLR_UNDER	"\r                                        " \
-			"                    \n" \
-			"\r                                        " \
-			"                    \n" \
-			"\r                                        " \
-			"                    \n" \
-			"\r                                        " \
-			"                    \n" \
-			"\r                                        " \
-			"                    \n" \
-			"\r                                        " \
-			"                    \n" \
-			"\r                                        " \
-			"                    \n" \
-			"\r                                        " \
-			"                    "
+#define CLR_UNDER	"\r                              " \
+			"                              \n" \
+			"\r                              " \
+			"                              \n" \
+			"\r                              " \
+			"                              \n" \
+			"\r                              " \
+			"                              \n" \
+			"\r                              " \
+			"                              \n" \
+			"\r                              " \
+			"                              \n" \
+			"\r                              " \
+			"                              \n" \
+			"\r                              " \
+			"                              "
 #endif
 
 void goto_xy(int x, int y);

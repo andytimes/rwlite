@@ -37,7 +37,7 @@ using std::cin; using std::cout;
 #include "music.h"
 #include "script.h"
 
-int aurora;
+int aurora = 0;
 bool rw_continue = false;
 
 static bool music_switch()
@@ -49,18 +49,14 @@ static bool music_switch()
 	return (cin >> s && s[0] == '1');
 }
 
-static void quit()
-{
-	clscr();
-	Mix_Quit();
-	SDL_Quit();
-}
-
 static void main_line()
 {
 	Script script;
 	script.read();
-	quit();
+
+	clscr();
+	Mix_Quit();
+	SDL_Quit();
 }
 
 static void start_menu()

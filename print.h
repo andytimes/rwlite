@@ -29,8 +29,10 @@
 
 #include <string>
 
-#define RUN_AUTO	-20
-#define RUN_MANUAL	-21
+enum Run_Status {
+	RUN_AUTO = -20,
+	RUN_MANUAL = -21,
+};
 
 enum Char_Size {
 	CHAR_EN_SIZE = 1,

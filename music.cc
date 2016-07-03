@@ -37,7 +37,7 @@ void mix_init()
 {
 	if (music_on) {
 		Mix_Init(MIX_INIT_OGG);
-		Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 2048);
+		Mix_OpenAudio(44100, AUDIO_S16, 2, 4096);
 	}
 }
 

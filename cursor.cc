@@ -29,13 +29,13 @@ using std::cout;
 
 #include "cursor.h"
 
-#if defined(_WIN32) || defined(_WIN64)
+#ifdef _WIN32
 #include <windows.h>
 #endif
 
 void goto_xy(int x, int y)
 {
-#if defined(_WIN32) || defined(_WIN64)
+#ifdef _WIN32
 	COORD cursorPosition;
 	cursorPosition.X = x - 1;
 	cursorPosition.Y = y - 1;
@@ -48,7 +48,7 @@ void goto_xy(int x, int y)
 
 void clscr()
 {
-#if defined(_WIN32) || defined(_WIN64)
+#ifdef _WIN32
 	system("cls");
 #else
 	cout << CLR_SCR;

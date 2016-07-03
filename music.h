@@ -30,7 +30,7 @@
 #include <string>
 #include <SDL_mixer.h>
 
-enum BGM_NAME {
+enum BGM_Name {
 	RW_Mebuki = 1,
 	RW_Hinagiku = 10,
 	RW_Wataboshi = 13,
