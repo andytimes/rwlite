@@ -114,4 +114,5 @@ end:
 int main(int, char *[])
 {
 	start_menu();
+	return 0;
 }

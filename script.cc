@@ -25,7 +25,7 @@
  */
 
 #include <fstream>
-using std::fstream; using std::getline;
+using std::fstream;
 
 #include <iostream>
 using std::cerr; using std::endl;
